@@ -88,8 +88,8 @@ public static void updateCustomersValue(Customers customers)
 	try {
 	Connection connection=getConnection();
 	PreparedStatement statement=connection.prepareStatement("update Customers set Name=? where Cust_id=?");
-	statement.setString(1,customers.getCust_id());
-	statement.setString(2,customers.getName());
+	statement.setString(1,customers.getName());
+	statement.setString(2,customers.getCust_id());
 	
 	
 	int result=statement.executeUpdate();
@@ -132,8 +132,9 @@ public static void selectCustomersValue(Customers customers) throws ClassNotFoun
 	}
 	
 }
-public static void insertVendorsValue(Vendors vendors) throws ClassNotFoundException,SQLException
+public static void insertVendorsValue(Vendors vendors) 
 {
+	try {
 	Connection connection=getConnection();
 	PreparedStatement statement=connection.prepareStatement("insert into Vendors values(?,?,?,?)");
 	statement.setString(1,vendors.getVendor_id());
@@ -147,13 +148,18 @@ public static void insertVendorsValue(Vendors vendors) throws ClassNotFoundExcep
 		System.out.println("inserted successfully");
 	}else
 		System.out.println("failed");
+	}catch(ClassNotFoundException ex) {
+		System.out.println(ex.getMessage());
+	}catch(SQLException ex) {
+		System.out.println(ex.getMessage());
+	}
 }
 public static void updateVendorsValue(Vendors vendors) throws ClassNotFoundException,SQLException
 {
 	Connection connection=getConnection();
 	PreparedStatement statement=connection.prepareStatement("update Vendors set Name=? where Vendor_id=?");
-	statement.setString(1,vendors.getVendor_id());
-	statement.setString(2,vendors.getVname());
+	statement.setString(1,vendors.getVname());
+	statement.setString(2,vendors.getVendor_id());
 	
 	
 	
@@ -179,23 +185,30 @@ public static void deleteVendorsValue(Vendors vendors) throws ClassNotFoundExcep
 	}else
 		System.out.println("failed");
 }
-public static void selectVendorsValue(Vendors vendors) throws ClassNotFoundException,SQLException
+public static void selectVendorsValue(Vendors vendors) 
 { 
+	try {
 	Statement statement=getConnection().createStatement();
 
 	ResultSet resultSet= statement.executeQuery("select *from Vendors");
 	while(resultSet.next())
 	{
 		System.out.println(resultSet.getString("Vendor_id"));
-		System.out.println(resultSet.getString("VName"));
+		System.out.println(resultSet.getString("Vname"));
 		System.out.println(resultSet.getString("Vaddress"));
 		System.out.println(resultSet.getString("Vdate"));
+	}
+	}catch(ClassNotFoundException ex) {
+		System.out.println(ex.getMessage());
+	}catch(SQLException ex) {
+		System.out.println(ex.getMessage());
 	}
 	
 }
 
 public static void insertSaleValue(Sale sale) throws ClassNotFoundException,SQLException
 {
+	try {
 	Connection connection=getConnection();
 	PreparedStatement statement=connection.prepareStatement("insert into Sale values(?,?,?)");
 	statement.setString(1,sale.getCust_id());
@@ -209,13 +222,18 @@ public static void insertSaleValue(Sale sale) throws ClassNotFoundException,SQLE
 		System.out.println("inserted successfully");
 	}else
 		System.out.println("failed");
+	}catch(ClassNotFoundException ex) {
+		System.out.println(ex.getMessage());
+	}catch(SQLException ex) {
+		System.out.println(ex.getMessage());
+	}
 }
 public static void updateSaleValue(Sale sale) throws ClassNotFoundException,SQLException
 {
 	Connection connection=getConnection();
 	PreparedStatement statement=connection.prepareStatement("update Sale set Jewellery_desc=? where Cust_id=?");
-	statement.setString(1,sale.getCust_id());
-	statement.setString(2,sale.getJewellery_desc());
+	statement.setString(1,sale.getJewellery_desc());
+	statement.setString(2,sale.getCust_id());
 	
 	
 	int result=statement.executeUpdate();
@@ -375,7 +393,7 @@ public static void main(String[] args) throws ClassNotFoundException, SQLExcepti
 	do {
 		System.out.println("1.insert");
 		System.out.println("2.update");
-		System.out.println("4.select");
+		System.out.println("3.select");
 		int op=scanner.nextInt();
 		switch(op)
 		{
@@ -383,9 +401,10 @@ public static void main(String[] args) throws ClassNotFoundException, SQLExcepti
 		break;
 		
 		case 2:updateSaleValue(sale);
+		
 		break;
 		
-		case 4:selectSaleValue(sale);
+		case 3:selectSaleValue(sale);
 		break;
 		
 		
